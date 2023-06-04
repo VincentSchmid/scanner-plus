@@ -1,3 +1,0 @@
-/home/ubuntu/dev/scanner-app-plus/build/CMakeFiles/rebuild_cache.dir
-/home/ubuntu/dev/scanner-app-plus/build/CMakeFiles/edit_cache.dir
-/home/ubuntu/dev/scanner-app-plus/build/CMakeFiles/scanner.dir
