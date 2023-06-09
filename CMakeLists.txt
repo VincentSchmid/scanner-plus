@@ -20,3 +20,6 @@ target_include_directories(scanner PRIVATE "/usr/include/sane")
 
 # Link against SANE library
 target_link_libraries(scanner PRIVATE sane)
+
+find_package(unofficial-libharu CONFIG REQUIRED)
+target_link_libraries(scanner PRIVATE unofficial::libharu::hpdf)

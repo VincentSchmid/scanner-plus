@@ -12,7 +12,7 @@ extern "C"
 #include "scanner.h"
 
 // Actual implementation of the scan_document function
-const char *scan_document(const char *device_name, SANE_Int dpi, int doc_width_mm, int doc_height_mm)
+const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width_mm, int doc_height_mm)
 {
     SANE_Status status;
     SANE_Handle device;
@@ -135,9 +135,17 @@ const char *scan_document(const char *device_name, SANE_Int dpi, int doc_width_m
     // Convert back to 8-bit before saving
     imgSharp.convertTo(imgSharp, CV_8UC3);
 
-    // Save the processed image to a file
-    const char *filename = "image.png";
-    cv::imwrite(filename, imgSharp);
+    return imgSharp;
+}
 
-    return filename;
+std::vector<uchar> get_jpeg_buffer(cv::Mat img)
+{
+    std::vector<uchar> buffer;
+    std::vector<int> params;
+    params.push_back(cv::IMWRITE_JPEG_QUALITY);
+    params.push_back(90); // Quality level
+
+    cv::imencode(".jpg", img, buffer, params);
+
+    return buffer;
 }
