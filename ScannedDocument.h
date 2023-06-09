@@ -28,6 +28,24 @@ public:
         HPDF_Free(pdf);
     }
 
+    std::vector<uchar> getPdfData()
+    {
+        HPDF_Doc pdf = HPDF_New(NULL, NULL);
+        for (const ScannedPage &page : pages)
+        {
+            addImageToPdf(pdf, page.getImageData(), page.getWidth(), page.getHeight());
+        }
+        HPDF_SaveToStream(pdf);
+        HPDF_ResetStream(pdf);
+
+        HPDF_UINT32 size = HPDF_GetStreamSize(pdf);
+        std::vector<uchar> data(size);
+        HPDF_ReadFromStream(pdf, data.data(), &size);
+        HPDF_Free(pdf);
+
+        return data;
+    }
+
 private:
     std::vector<ScannedPage> pages;
 
@@ -41,9 +59,6 @@ private:
         // Convert dimensions from mm to points
         float imgWidthPt = mmToPoint(imgWidth);
         float imgHeightPt = mmToPoint(imgHeight);
-
-        std::cout << "Width in points: " << imgWidthPt << std::endl;
-        std::cout << "Height in points: " << imgHeightPt << std::endl;
 
         // Create the HPDF image object
         HPDF_Image image = HPDF_LoadJpegImageFromMem(pdf, img.data(), img.size());
