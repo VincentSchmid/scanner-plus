@@ -11,6 +11,25 @@ extern "C"
 
 #include "scanner.h"
 
+const cv::Mat image_processing(cv::Mat img)
+{
+    // Blur the image using Gaussian blur
+    cv::Mat imgBlurred;
+    cv::GaussianBlur(img, imgBlurred, cv::Size(0, 0), 3);
+
+    // Subtract the blurred image from the original (scaled) to get the "mask"
+    cv::Mat mask = img - imgBlurred;
+
+    // Then add the "mask" back to the original image, scaling it to control sharpness
+    float sharpness_factor = 0.5;
+    cv::Mat imgSharp = img + sharpness_factor * mask;
+
+    // Convert back to 8-bit before saving
+    imgSharp.convertTo(imgSharp, CV_8UC3);
+
+    return imgSharp;
+}
+
 // Actual implementation of the scan_document function
 const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width_mm, int doc_height_mm)
 {
@@ -121,21 +140,7 @@ const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width
     // Reorder color channels to RGB
     cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
 
-    // Blur the image using Gaussian blur
-    cv::Mat imgBlurred;
-    cv::GaussianBlur(img, imgBlurred, cv::Size(0, 0), 3);
-
-    // Subtract the blurred image from the original (scaled) to get the "mask"
-    cv::Mat mask = img - imgBlurred;
-
-    // Then add the "mask" back to the original image, scaling it to control sharpness
-    float sharpness_factor = 0.5;
-    cv::Mat imgSharp = img + sharpness_factor * mask;
-
-    // Convert back to 8-bit before saving
-    imgSharp.convertTo(imgSharp, CV_8UC3);
-
-    return imgSharp;
+    return image_processing(img);
 }
 
 std::vector<uchar> get_jpeg_buffer(cv::Mat img)
