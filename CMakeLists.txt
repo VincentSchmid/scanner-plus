@@ -8,18 +8,23 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+
 # Find OpenCV
 find_package(OpenCV REQUIRED)
 
-# Add executable and link libraries
-add_executable(scanner main.cpp scanner.cpp)
-target_link_libraries(scanner PRIVATE ${OpenCV_LIBS})
+# Find libharu
+find_package(unofficial-libharu CONFIG REQUIRED)
+
+find_package(cpprestsdk REQUIRED)
 
 # Include SANE headers
-target_include_directories(scanner PRIVATE "/usr/include/sane")
+include_directories("/usr/include/sane")
 
-# Link against SANE library
+# Add executable and link libraries
+add_executable(scanner main.cpp scanner.cpp DocumentScanner.cpp ScannedDocument.cpp ScannedPage.cpp)
+
+# Link libraries
+target_link_libraries(scanner PRIVATE ${OpenCV_LIBS})
 target_link_libraries(scanner PRIVATE sane)
-
-find_package(unofficial-libharu CONFIG REQUIRED)
 target_link_libraries(scanner PRIVATE unofficial::libharu::hpdf)
+target_link_libraries(scanner PRIVATE cpprestsdk::cpprest)
