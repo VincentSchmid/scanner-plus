@@ -23,7 +23,7 @@ const cv::Mat image_processing(cv::Mat img)
     // Then add the "mask" back to the original image, scaling it to control sharpness
     float sharpness_factor = 0.5;
     cv::Mat imgSharp = img + sharpness_factor * mask;
-mak
+
     // Convert back to 8-bit before saving
     imgSharp.convertTo(imgSharp, CV_8UC3);
 
