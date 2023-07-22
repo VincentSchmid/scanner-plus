@@ -48,11 +48,11 @@ int main()
     listener.support([](http_request request)
     {
         auto path = request.relative_uri().path();
-        if (path == "/create_document")
+        if (path == "/documents" && request.method() == methods::POST)
             handle_create_document(request);
-        else if (path == "/add_page")
+        else if (path == "/documents/pages")
             handle_add_page(request);
-        else if (path == "/get_pdf_document")
+        else if (path == "/documents" && request.method() == methods::GET)
             handle_get_pdf_document(request);
         else
             request.reply(status_codes::NotFound);
