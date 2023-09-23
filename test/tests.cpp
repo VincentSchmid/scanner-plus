@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "DocumentScanner.h"  // Include relevant headers for your testing
+#include "scanner/DocumentScanner.h"  // Include relevant headers for your testing
 
 // Sample test case (modify as needed)
 TEST(DocumentScannerTest, TestScanFunction) {

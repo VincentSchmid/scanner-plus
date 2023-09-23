@@ -37,10 +37,10 @@ const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width
     // Adjust the scanning parameters for the document
     params.format = SANE_FRAME_RGB;
     params.last_frame = 0;
-    params.pixels_per_line = doc_width_mm * dpi / 25.4; // width in pixels
-    params.lines = doc_height_mm * dpi / 25.4;          // height in pixels
+    // params.pixels_per_line = doc_width_mm * dpi / 25.4; // width in pixels
+    // params.lines = doc_height_mm * dpi / 25.4;          // height in pixels
     params.depth = 8;                                   // 8 bits per channel (assuming RGB format)
-    params.bytes_per_line = params.pixels_per_line * 3; // Assuming RGB format (3 bytes per pixel)
+    // params.bytes_per_line = params.pixels_per_line * 3; // Assuming RGB format (3 bytes per pixel)
 
     SANE_Int num_options;
     sane_control_option(device, 0, SANE_ACTION_GET_VALUE, &num_options, 0);
@@ -122,7 +122,7 @@ const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width
     // Reorder color channels to RGB
     cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
 
-    return image_processing(img);
+    return img;
 }
 
 std::vector<uchar> get_jpeg_buffer(cv::Mat img)
@@ -136,3 +136,4 @@ std::vector<uchar> get_jpeg_buffer(cv::Mat img)
 
     return buffer;
 }
+mail
