@@ -22,9 +22,10 @@ find_package(GTest REQUIRED)
 
 # Include SANE headers
 include_directories("/usr/include/sane")
+include_directories(${CMAKE_SOURCE_DIR}/src)
 
 # Add executable and link libraries
-add_executable(scanner main.cpp scanner.cpp DocumentScanner.cpp ScannedDocument.cpp ScannedPage.cpp imageProcessing.cpp)
+add_executable(scanner main.cpp src/scanner.cpp src/DocumentScanner.cpp src/ScannedDocument.cpp src/ScannedPage.cpp src/imageProcessing.cpp)
 
 # Link libraries
 target_link_libraries(scanner PRIVATE ${OpenCV_LIBS})
