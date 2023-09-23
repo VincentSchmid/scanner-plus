@@ -43,10 +43,11 @@ void handle_get_pdf_document(http_request request)
 
 int main()
 {
-    http::experimental::listener::http_listener listener(U("http://0.0.0.0:8080"));
+    http::experimental::listener::http_listener listener(U("http://0.0.0.0:8085"));
     
     listener.support([](http_request request)
     {
+        ucout << request.to_string() << std::endl;
         auto path = request.relative_uri().path();
         if (path == "/documents" && request.method() == methods::POST)
             handle_create_document(request);
