@@ -1,4 +1,4 @@
-#include "ScannedDocument.h"
+#include "scanner/ScannedDocument.h"
 
 
 ScannedDocument::ScannedDocument() {

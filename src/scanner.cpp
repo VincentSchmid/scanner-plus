@@ -9,8 +9,7 @@ extern "C"
 #include <vector>
 #include <iostream>
 
-#include "scanner.h"
-
+#include "scanner/scanner.h"
 
 
 // Actual implementation of the scan_document function

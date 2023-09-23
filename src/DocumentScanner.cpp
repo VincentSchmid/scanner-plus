@@ -1,4 +1,4 @@
-#include "DocumentScanner.h"
+#include "scanner/DocumentScanner.h"
 
 DocumentScanner::DocumentScanner() {
     // Initialize the scanner hardware.

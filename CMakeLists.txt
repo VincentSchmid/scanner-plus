@@ -22,7 +22,7 @@ find_package(GTest REQUIRED)
 
 # Include SANE headers
 include_directories("/usr/include/sane")
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Add executable and link libraries
 add_executable(scanner main.cpp src/scanner.cpp src/DocumentScanner.cpp src/ScannedDocument.cpp src/ScannedPage.cpp src/imageProcessing.cpp)

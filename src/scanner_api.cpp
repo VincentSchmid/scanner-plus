@@ -1,8 +1,9 @@
-#include "scanner_api.h"
-#include "DocumentScanner.h"
-#include "ScannedDocument.h"
-#include "ScannedPage.h"
+#include "scanner/scanner_api.h"
+#include "scanner/DocumentScanner.h"
+#include "scanner/ScannedDocument.h"
+#include "scanner/ScannedPage.h"
 #include <map>
+
 
 static std::map<void*, ScannedDocument> doc_map;
 

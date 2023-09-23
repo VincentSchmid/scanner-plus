@@ -1,7 +1,7 @@
 #include <cpprest/http_listener.h>
 #include <cpprest/json.h>
-#include "DocumentScanner.h"
-#include "ScannedDocument.h"
+#include "scanner/DocumentScanner.h"
+#include "scanner/ScannedDocument.h"
 
 using namespace web;
 using namespace http;

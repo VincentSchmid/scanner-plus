@@ -1,4 +1,4 @@
-#include <opencv2/opencv.hpp>
+#include "scanner/imageProcessing.h"
 
 
 const cv::Mat sharpen_image(cv::Mat img)
