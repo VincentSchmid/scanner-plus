@@ -17,14 +17,20 @@ find_package(unofficial-libharu CONFIG REQUIRED)
 
 find_package(cpprestsdk REQUIRED)
 
+# Find GTest
+find_package(GTest REQUIRED)
+
 # Include SANE headers
 include_directories("/usr/include/sane")
 
 # Add executable and link libraries
-add_executable(scanner main.cpp scanner.cpp DocumentScanner.cpp ScannedDocument.cpp ScannedPage.cpp)
+add_executable(scanner main.cpp scanner.cpp DocumentScanner.cpp ScannedDocument.cpp ScannedPage.cpp imageProcessing.cpp)
 
 # Link libraries
 target_link_libraries(scanner PRIVATE ${OpenCV_LIBS})
 target_link_libraries(scanner PRIVATE sane)
 target_link_libraries(scanner PRIVATE unofficial::libharu::hpdf)
 target_link_libraries(scanner PRIVATE cpprestsdk::cpprest)
+
+add_executable(scanner_tests test/tests.cpp)
+target_link_libraries(scanner_tests GTest::GTest GTest::Main ${OpenCV_LIBS} sane unofficial::libharu::hpdf cpprestsdk::cpprest)
