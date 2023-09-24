@@ -124,16 +124,3 @@ const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width
 
     return img;
 }
-
-std::vector<uchar> get_jpeg_buffer(cv::Mat img)
-{
-    std::vector<uchar> buffer;
-    std::vector<int> params;
-    params.push_back(cv::IMWRITE_JPEG_QUALITY);
-    params.push_back(90); // Quality level
-
-    cv::imencode(".jpg", img, buffer, params);
-
-    return buffer;
-}
-mail

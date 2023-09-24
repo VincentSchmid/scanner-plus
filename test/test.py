@@ -5,7 +5,6 @@ import pytest
 BASE_URL = "http://localhost:8085"
 
 # dont run
-@pytest.mark.skip
 def test_create_document():
     dpi = 75
     requests.post(f"{BASE_URL}/documents", params={"dpi": dpi})
@@ -20,6 +19,7 @@ def test_create_document():
     with open('document.pdf', 'wb') as f:
         f.write(response.content)
 
+@pytest.mark.skip
 def test_write_file():
     dpi = 75
     requests.post(f"{BASE_URL}/documents", params={"dpi": dpi})

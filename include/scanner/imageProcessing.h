@@ -5,6 +5,7 @@
 
 #include <opencv2/opencv.hpp>
 
+std::vector<uchar> get_jpeg_buffer(cv::Mat img);
 const cv::Mat sharpen_image(cv::Mat img);
 const cv::Mat auto_crop_image(cv::Mat img);
 
