@@ -34,7 +34,7 @@ const cv::Mat sharpen_image(cv::Mat img)
 
 const cv::Mat auto_crop_image(cv::Mat img)
 {
-    cv::Mat image = img.clone();
+    cv::Mat image(img);
 
     // Resize the image
     cv::resize(image, image, cv::Size(), 0.5, 0.5);
@@ -94,7 +94,7 @@ const cv::Mat auto_crop_image(cv::Mat img)
 
     if (displayContour.empty()) {
         std::cout << "No four-vertex contour found!" << std::endl;
-        return;
+        return img;
     }
 
     cv::Point2f bottomRight = displayContour[2];

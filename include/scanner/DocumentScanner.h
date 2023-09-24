@@ -4,6 +4,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "ScannedPage.h"
+#include "imageProcessing.h"
 
 class DocumentScanner {
 public:

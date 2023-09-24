@@ -16,10 +16,7 @@ void* create_document() {
 
 void add_page(void* doc_ptr, const char* device_name, int dpi, int doc_width_mm, int doc_height_mm) {
     DocumentScanner scanner;
-    cv::Mat img = scanner.scan(device_name, dpi, doc_width_mm, doc_height_mm);
-    img = auto_crop_image(img);
-    img = sharpen_image(img);
-    ScannedPage page = ScannedPage(get_jpeg_buffer(img), doc_width_mm, doc_height_mm);
+    ScannedPage page = scanner.scan(device_name, dpi, doc_width_mm, doc_height_mm);
     doc_map[doc_ptr].addPage(page);
 }
 
