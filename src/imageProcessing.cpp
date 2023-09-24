@@ -34,14 +34,14 @@ const cv::Mat sharpen_image(cv::Mat img)
 
 const cv::Mat auto_crop_image(cv::Mat img)
 {
-    cv::Mat image(img);
+    cv::Mat smallImage;
 
-    // Resize the image
-    cv::resize(image, image, cv::Size(), 0.5, 0.5);
+    // Resize the smallImage
+    cv::resize(img, smallImage, cv::Size(), 0.5, 0.5);
 
-    // Blur the image to reduce color noise
+    // Blur the smallImage to reduce color noise
     cv::Mat blurred;
-    cv::GaussianBlur(image, blurred, cv::Size(5, 5), 0);
+    cv::GaussianBlur(smallImage, blurred, cv::Size(5, 5), 0);
 
     // Create a mask based on the known background color
     cv::Mat mask;
@@ -71,7 +71,7 @@ const cv::Mat auto_crop_image(cv::Mat img)
 
     // Draw the largest contour
     cv::Mat result;
-    image.copyTo(result);
+    smallImage.copyTo(result);
     cv::drawContours(result, std::vector<std::vector<cv::Point> >(1, docContour), -1, cv::Scalar(0, 255, 0), 2);
 
     std::vector<cv::Point> displayContour; // This will store the four-vertex contour
