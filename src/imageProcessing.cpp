@@ -1,4 +1,5 @@
 #include "scanner/imageProcessing.h"
+#include <opencv2/opencv.hpp>
 
 
 std::vector<uchar> get_jpeg_buffer(cv::Mat img)
@@ -6,7 +7,7 @@ std::vector<uchar> get_jpeg_buffer(cv::Mat img)
     std::vector<uchar> buffer;
     std::vector<int> params;
     params.push_back(cv::IMWRITE_JPEG_QUALITY);
-    params.push_back(90); // Quality level
+    params.push_back(90);
 
     cv::imencode(".jpg", img, buffer, params);
 

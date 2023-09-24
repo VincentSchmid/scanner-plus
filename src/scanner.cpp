@@ -1,19 +1,8 @@
-extern "C"
-{
-#include <sane/sane.h>
-}
-
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-
-#include <vector>
-#include <iostream>
-
 #include "scanner/scanner.h"
 
 
 // Actual implementation of the scan_document function
-const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width_mm, int doc_height_mm)
+const void scan_document(const char *device_name, SANE_Int dpi, int doc_width_mm, int doc_height_mm, cv::Mat& outputImg)
 {
     SANE_Status status;
     SANE_Handle device;
@@ -37,10 +26,10 @@ const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width
     // Adjust the scanning parameters for the document
     params.format = SANE_FRAME_RGB;
     params.last_frame = 0;
-    // params.pixels_per_line = doc_width_mm * dpi / 25.4; // width in pixels
-    // params.lines = doc_height_mm * dpi / 25.4;          // height in pixels
+    params.pixels_per_line = doc_width_mm * dpi / 25.4; // width in pixels
+    params.lines = doc_height_mm * dpi / 25.4;          // height in pixels
     params.depth = 8;                                   // 8 bits per channel (assuming RGB format)
-    // params.bytes_per_line = params.pixels_per_line * 3; // Assuming RGB format (3 bytes per pixel)
+    params.bytes_per_line = params.pixels_per_line * 3; // Assuming RGB format (3 bytes per pixel)
 
     SANE_Int num_options;
     sane_control_option(device, 0, SANE_ACTION_GET_VALUE, &num_options, 0);
@@ -116,11 +105,12 @@ const cv::Mat scan_document(const char *device_name, SANE_Int dpi, int doc_width
     sane_close(device);
     sane_exit();
 
-    // Convert the image data to an OpenCV Mat
-    cv::Mat img(params.lines, params.pixels_per_line, CV_8UC3, image_data.data());
+    // Allocate memory in the cv::Mat
+    outputImg.create(params.lines, params.pixels_per_line, CV_8UC3);
+
+    // Copy the data from image_data to the cv::Mat
+    std::memcpy(outputImg.data, image_data.data(), image_data.size());
 
     // Reorder color channels to RGB
-    cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
-
-    return img;
+    cv::cvtColor(outputImg, outputImg, cv::COLOR_BGR2RGB);
 }

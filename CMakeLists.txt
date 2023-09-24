@@ -25,7 +25,7 @@ include_directories("/usr/include/sane")
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Add executable and link libraries
-add_executable(scanner main.cpp src/scanner.cpp src/DocumentScanner.cpp src/ScannedDocument.cpp src/ScannedPage.cpp src/imageProcessing.cpp)
+add_executable(scanner main.cpp src/scanner.cpp src/DocumentScanner.cpp src/ScannedDocument.cpp src/ScannedPage.cpp src/imageProcessing.cpp src/imageProcessing.cpp)
 
 # Link libraries
 target_link_libraries(scanner PRIVATE ${OpenCV_LIBS})
@@ -33,5 +33,5 @@ target_link_libraries(scanner PRIVATE sane)
 target_link_libraries(scanner PRIVATE unofficial::libharu::hpdf)
 target_link_libraries(scanner PRIVATE cpprestsdk::cpprest)
 
-add_executable(scanner_tests test/tests.cpp)
+add_executable(scanner_tests test/test.cpp src/DocumentScanner.cpp src/ScannedPage.cpp src/scanner.cpp src/ScannedDocument.cpp src/imageProcessing.cpp)
 target_link_libraries(scanner_tests GTest::GTest GTest::Main ${OpenCV_LIBS} sane unofficial::libharu::hpdf cpprestsdk::cpprest)

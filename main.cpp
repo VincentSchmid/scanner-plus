@@ -44,7 +44,7 @@ void handle_get_pdf_document(http_request request)
 int main()
 {
     http::experimental::listener::http_listener listener(U("http://0.0.0.0:8085"));
-    
+
     listener.support([](http_request request)
     {
         ucout << request.to_string() << std::endl;
