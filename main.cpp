@@ -26,11 +26,9 @@ void handle_create_document(http_request request)
 void handle_add_page(http_request request)
 {
     // Your code for adding a page here
-    const char *device_name = "pixma:04A91908"; // Replace this with your actual device name
-    int doc_width_mm = 210; // Document width in mm (A4 paper)
-    int doc_height_mm = 297; // Document height in mm (A4 paper)
+    const char *device_name = "pixma:04A91908";
 
-    ScannedPage page = scanner.scan(device_name, dpi, doc_width_mm, doc_height_mm);
+    ScannedPage page = scanner.scan(device_name, dpi);
     doc.addPage(page);
     request.reply(status_codes::OK);
 }

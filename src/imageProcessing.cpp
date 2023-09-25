@@ -53,11 +53,16 @@ const std::vector<cv::Point2f> getDocumentContours(cv::Mat img)
     // Create a mask based on the known background color
     cv::Mat mask;
     cv::Mat gray;
-    cv::cvtColor(smallImage, gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(smallImage, gray, cv::COLOR_RGB2GRAY);
     cv::adaptiveThreshold(gray, mask, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY_INV, 11, 2);
 
     cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(9, 9));
     cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, kernel);
+
+     // Erode the entire mask
+    cv::Mat erodedMask;
+    cv::erode(mask, mask, kernel, cv::Point(-1, -1), 1);
+    cv::dilate(mask, mask, kernel, cv::Point(-1, -1), 1);
 
     // 2. Find Contours
     std::vector<std::vector<cv::Point>> contours;
@@ -119,7 +124,11 @@ const std::vector<cv::Point2f> getDocumentContours(cv::Mat img)
 
 const cv::Mat crop_image(cv::Mat img, std::vector<cv::Point2f> cropPoints)
 {
-    return fourPointTransform(img, cropPoints);
+    //return fourPointTransform(img, cropPoints);
+    //simple crop for now
+    cv::Rect rect(cropPoints[0], cropPoints[2]);
+    cv::Mat croppedImage = img(rect);
+    return croppedImage;
 }
 
 std::vector<cv::Point2f> order_points(const std::vector<cv::Point>& pts) {

@@ -1,12 +1,15 @@
 #include "scanner/DocumentScanner.h"
 
-ScannedPage DocumentScanner::scan(const std::string device_name, int dpi, int width_mm, int height_mm) {
+ScannedPage DocumentScanner::scan(const std::string device_name, int dpi) {
     cv::Mat imageData;
-    scannerHardware->scanDocument(device_name.c_str(), dpi, width_mm, height_mm, imageData);
+    scannerHardware->scanDocument(device_name.c_str(), dpi, 210, 297, imageData);
     std::vector<cv::Point2f> contours = getDocumentContours(imageData);
-    imageData = crop_image(imageData, contours);
-    imageData = adjustBrightnessContrast(imageData, -50.0, 18.0);
+    cv::Mat croppedImage = crop_image(imageData, contours);
+    cv::Mat result = adjustBrightnessContrast(croppedImage, -50.0, 18.0);
 
-    std::vector<uchar> jpgBuffer = get_jpeg_buffer(imageData);
+    double width_mm = result.cols * 25.4 / dpi;
+    double height_mm = result.rows * 25.4 / dpi;
+
+    std::vector<uchar> jpgBuffer = get_jpeg_buffer(result);
     return ScannedPage(jpgBuffer, width_mm, height_mm);
 }

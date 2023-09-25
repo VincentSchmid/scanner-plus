@@ -14,5 +14,5 @@ public:
     DocumentScanner(std::unique_ptr<IScannerHardware> hardware) 
         : scannerHardware(std::move(hardware)) {};
 
-    ScannedPage scan(const std::string device_name, int dpi, int width_mm, int height_mm);
+    ScannedPage scan(const std::string device_name, int dpi);
 };

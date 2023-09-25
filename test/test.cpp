@@ -14,10 +14,8 @@ TEST(DocumentScannerTest, DISABLED_TestScanFunction) {
     DocumentScanner scanner = DocumentScanner(std::move(saneScanner));
 
     int dpi = 150;
-    const char *device_name = "pixma:04A91908"; // Replace this with your actual device name
-    int doc_width_mm = 210; // Document width in mm (A4 paper)
-    int doc_height_mm = 297; // Document height in mm (A4 paper)
-    ScannedPage page = scanner.scan(device_name, dpi, doc_width_mm, doc_height_mm);
+    const char *device_name = "pixma:04A91908";
+    ScannedPage page = scanner.scan(device_name, dpi);
 }
 
 TEST(CropTest, DISABLED_TestImgCrop) {
