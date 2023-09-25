@@ -1,5 +1,7 @@
 #include <cpprest/http_listener.h>
 #include <cpprest/json.h>
+#include <iostream>
+
 #include "scanner/DocumentScanner.h"
 #include "scanner/ScannedDocument.h"
 #include "scanner/SaneScanner.h"
@@ -42,9 +44,21 @@ void handle_get_pdf_document(http_request request)
     request.reply(status_codes::OK, stream, "application/pdf").wait();
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    http::experimental::listener::http_listener listener(U("http://0.0.0.0:8085"));
+    utility::string_t port = U("8080"); // Default port
+
+    if (argc == 2) {
+        port = utility::conversions::to_string_t(argv[1]);
+    } else if (argc > 2) {
+        std::cerr << "Usage: " << argv[0] << " [port]" << std::endl;
+        return 1;
+    }
+
+    utility::string_t address = U("http://0.0.0.0:");
+    address.append(port);
+
+    http::experimental::listener::http_listener listener(address);
 
     listener.support([](http_request request)
     {
